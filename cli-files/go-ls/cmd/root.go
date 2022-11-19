@@ -9,9 +9,16 @@ import (
 var rootCmd = &cobra.Command{
     Use:   "go-ls",
     Short: "list files",
-    Long: `implementation of cli command ls using go`,
+    Long: ` cli command ls using go`,
+    Args: cobra.ArbitraryArgs,
     Run: func(cmd *cobra.Command, args []string) {
-      files, e := ioutil.ReadDir(".")
+     var directory =""
+      if len(args) == 0 {
+        directory= "."
+      } else {
+        directory = args[0]
+      }
+      files, e := ioutil.ReadDir(directory)
       if e != nil {
          panic(e)
       }
