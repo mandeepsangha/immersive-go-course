@@ -1,29 +1,28 @@
 package cmd
 
 import (
-    "fmt"
     "io/ioutil"
     "github.com/spf13/cobra"
-    
+    "log"
 )
 
 var rootCmd = &cobra.Command{
-    Use:   "hugo",
-    Short: "Hugo is a very fast static site generator",
-    Long: `A Fast and Flexible Static Site Generator built with
-                  love by spf13 and friends in Go.
-                  Complete documentation is available at https://gohugo.io/documentation/`,
+    Use:   "go-ls",
+    Short: "list files",
+    Long: `implementation of cli command ls using go`,
     Run: func(cmd *cobra.Command, args []string) {
-        fmt.Println("Hello, World!")
+      files, e := ioutil.ReadDir(".")
+      if e != nil {
+         panic(e)
+      }
+      for _, file := range files {
+         println(file.Name())
+      }
     },
   }
 
   func Execute() {
-    files, e := ioutil.ReadDir(".")
-    if e != nil {
-       panic(e)
-    }
-    for _, file := range files {
-       println(file.Name())
+    if err := rootCmd.Execute(); err != nil {
+      log.Fatal(err)
     }
   }
