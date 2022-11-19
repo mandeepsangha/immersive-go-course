@@ -1,10 +1,11 @@
 package cmd
 
 import (
-    "io/ioutil"
     "github.com/spf13/cobra"
     "log"
-    
+    "os"
+    "fmt"
+  
 )
 
 var rootCmd = &cobra.Command{
@@ -22,22 +23,19 @@ var rootCmd = &cobra.Command{
         directory = args[0]
       }
 
-     
-
-    //   fileInfo, err := os.ReadFile(directory)
-		// if err != nil {
-		// 	log.Fatal(err)
-		// }
-		// if !fileInfo.IsDir() {
-		// 	fmt.Printf("%s\n", directory)
-		// 	return
-		// }
-
+      fileInfo, err := os.Stat(directory)
+        if err != nil {
+          log.Fatal(err)
+        }
+        if !fileInfo.IsDir() {
+          fmt.Printf("%s\n", directory)
+          return
+        }
 
       // Read Directory file names
-      files, e := ioutil.ReadDir(directory)
-      if e != nil {
-         log.Fatal("Argument is not a directory")
+      files, err := os.ReadDir(directory)
+      if err != nil {
+         log.Fatal(err)
       }
       for _, file := range files {
         // for loop to print each file name
