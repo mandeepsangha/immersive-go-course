@@ -4,6 +4,7 @@ import (
     "io/ioutil"
     "github.com/spf13/cobra"
     "log"
+    
 )
 
 var rootCmd = &cobra.Command{
@@ -14,15 +15,32 @@ var rootCmd = &cobra.Command{
     Run: func(cmd *cobra.Command, args []string) {
      var directory =""
       if len(args) == 0 {
+        // if no argument set directory to current directory
         directory= "."
       } else {
+        // if argument set directory to argument
         directory = args[0]
       }
+
+     
+
+    //   fileInfo, err := os.ReadFile(directory)
+		// if err != nil {
+		// 	log.Fatal(err)
+		// }
+		// if !fileInfo.IsDir() {
+		// 	fmt.Printf("%s\n", directory)
+		// 	return
+		// }
+
+
+      // Read Directory file names
       files, e := ioutil.ReadDir(directory)
       if e != nil {
-         panic(e)
+         log.Fatal("Argument is not a directory")
       }
       for _, file := range files {
+        // for loop to print each file name
          println(file.Name())
       }
     },
