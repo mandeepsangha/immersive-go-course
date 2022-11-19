@@ -2,10 +2,10 @@ package cmd
 
 import (
     "fmt"
-    "os"
+    "io/ioutil"
     "github.com/spf13/cobra"
+    
 )
-
 
 var rootCmd = &cobra.Command{
     Use:   "hugo",
@@ -17,10 +17,13 @@ var rootCmd = &cobra.Command{
         fmt.Println("Hello, World!")
     },
   }
-  
+
   func Execute() {
-    if err := rootCmd.Execute(); err != nil {
-      fmt.Fprintln(os.Stderr, err)
-      os.Exit(1)
+    files, e := ioutil.ReadDir(".")
+    if e != nil {
+       panic(e)
+    }
+    for _, file := range files {
+       println(file.Name())
     }
   }
