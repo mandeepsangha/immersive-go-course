@@ -5,6 +5,7 @@ import (
     "log"
     "os"
     "fmt"
+    //"path/filepath"
   
 )
 
@@ -27,7 +28,14 @@ var rootCmd = &cobra.Command{
         if err != nil {
           log.Fatal(err)
         }
+ 
+        // directory,err = filepath.Abs(directory)
+        // fmt.Println(filepath.Base(absolute_path))
+        // directory = filepath.Base(directory)
+        // fmt.Println("dir is:", directory)
+
         if !fileInfo.IsDir() {
+          // Print if not a directory
           fmt.Printf("%s\n", directory)
           return
         }
