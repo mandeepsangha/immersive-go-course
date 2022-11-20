@@ -6,8 +6,9 @@ package cmd
 
 import (
 	"os"
-
+	"fmt"
 	"github.com/spf13/cobra"
+	"log"
 )
 
 
@@ -15,16 +16,22 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "go-cat",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+	Short: "reproduces cat command using go",
+	Long: ``,
+	Args: cobra.ArbitraryArgs,
+	 Run: func(cmd *cobra.Command, args []string) { 
+		var path =""
+		//if no argument log error
+		if len(args) == 0 {
+	
+			log.Fatal("error")
+		}
+		path = args[0]
+		fmt.Printf("%s\n", path)
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+
+
+	 },
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
