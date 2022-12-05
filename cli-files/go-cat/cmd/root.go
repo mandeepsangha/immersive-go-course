@@ -9,6 +9,8 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"log"
+	
+	
 )
 
 
@@ -19,17 +21,32 @@ var rootCmd = &cobra.Command{
 	Short: "reproduces cat command using go",
 	Long: ``,
 	Args: cobra.ArbitraryArgs,
-	 Run: func(cmd *cobra.Command, args []string) { 
-		var path =""
-		//if no argument log error
-		if len(args) == 0 {
+	Run: func(cmd *cobra.Command, args []string) { 
 	
+		if len(args) == 0 {
+			log.Fatal("error no arguments")
+		}
+		path := args[0]
+
+		
+		file, err := os.Stat(path)
+		if err != nil {
 			log.Fatal("error")
 		}
-		path = args[0]
-		fmt.Printf("%s\n", path)
+
+	
+		if file.IsDir() {
+			log.Fatal("error is a Directory")
+		}
 
 
+		words, err := os.ReadFile(path)
+		if err != nil {
+			log.Fatal("error")
+		}
+
+		//prints text
+    	os.Stdout.Write(words)
 
 	 },
 }
@@ -43,16 +60,6 @@ func Execute() {
 	}
 }
 
-func init() {
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
 
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.go-cat.yaml)")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-}
 
 
