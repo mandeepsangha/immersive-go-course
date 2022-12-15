@@ -6,11 +6,8 @@ package cmd
 
 import (
 	"os"
-	"fmt"
 	"github.com/spf13/cobra"
 	"log"
-	
-	
 )
 
 
@@ -22,18 +19,20 @@ var rootCmd = &cobra.Command{
 	Long: ``,
 	Args: cobra.ArbitraryArgs,
 	Run: func(cmd *cobra.Command, args []string) { 
-	
+		
 		if len(args) == 0 {
 			log.Fatal("error no arguments")
 		}
-		path := args[0]
-
-		
-		file, err := os.Stat(path)
-		if err != nil {
-			log.Fatal("error")
+		if len(args) > 1 {
+			log.Fatal("too many arguments")
 		}
 
+		path := args[0]
+
+		file, err := os.Stat(path)
+		if err != nil {
+			log.Fatal("error here")
+		}
 	
 		if file.IsDir() {
 			log.Fatal("error is a Directory")
